@@ -56,6 +56,7 @@ exports.login = async (req, res) => {
         const token = await user.generateToken();
         const options = {
             expires: new Date(Date.now() + 360 * 24 * 60 * 60 * 1000),
+            httpOnly: true
         };
         return res.status(200).cookie("token", token, options).send({
             user,

@@ -6,8 +6,9 @@ exports.authMiddle = async (req, res, next) => {
     let token;
 
     if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.cookies?.token ||
+      (req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer"))
     ) {
       token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
@@ -16,7 +17,6 @@ exports.authMiddle = async (req, res, next) => {
       next();
     } else {
       return res.status(401).send({
-        success: false,
         message: "please login",
       });
     }
