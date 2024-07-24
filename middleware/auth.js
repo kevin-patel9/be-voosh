@@ -11,6 +11,11 @@ exports.authMiddle = async (req, res, next) => {
         req.headers.authorization.startsWith("Bearer"))
     ) {
       token = req.cookies.token || req.headers.authorization.split(" ")[1];
+      
+      if (!token)
+        return res.status(401).send({
+            message: "please login",
+        });
 
       const decoded = await jwt.verify(token, process.env.KEY);
       req.user = await UserModel.findById(decoded._id);
