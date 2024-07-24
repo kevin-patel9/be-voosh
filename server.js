@@ -7,7 +7,7 @@ const app = express();
 require('dotenv').config({ path: "./config/config.env" });
 
 // middlewares
-app.use(cors({ origin: ["http://localhost:3000", "https://fe-voosh.vercel.app"], credentials: true }));
+app.use(cors({ origin: "*"}));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
