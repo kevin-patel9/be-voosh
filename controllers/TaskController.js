@@ -1,11 +1,14 @@
+const { authMiddle } = require("../middleware/auth");
 const Task = require("../models/TaskModels");
 
 exports.createTask = async (req, res) => {
     try {
-        const { title, description } = req.body;
+        const { title, description, token } = req.body;
+
+        const userId = await authMiddle(token);
         
         const newTask = {
-            userId: req.user.userId,
+            userId,
             title,
             description
         };
@@ -24,9 +27,11 @@ exports.createTask = async (req, res) => {
 
 exports.getAllTask = async (req, res) => {
     try {
-        const { sorted } = req.params;
+        const { sorted, token } = req.params;
 
-        const allTask = await Task.find({ userId: req.user.userId });
+        const userId = await authMiddle(token);
+
+        const allTask = await Task.find({ userId });
 
         const taskTypes = {
             toComplete: [],
