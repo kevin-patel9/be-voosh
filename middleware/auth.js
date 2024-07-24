@@ -2,16 +2,19 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("../models/UserModel");
 
 exports.authMiddle = async (req, res, next) => {
-  try {
-    const token = req.cookies?.token || req.headers?.authorization?.split(' ')[1];
-    if (!token) return res.status(401).send('Access denied. No token Provided.');
+  let token;
 
-      const decoded = await jwt.verify(token, process.env.KEY);
+  try {
+    if (req.cookies?.token || (req.headers.authorization && req.headers.authorization.startsWith("Bearer"))) {
+      token = req.cookies.token || req.headers.authorization.split(' ')[1];
+
+      const decoded = jwt.verify(token, process.env.KEY);
       req.user = await UserModel.findById(decoded._id);
       next();
+    } else {
+      res.status(401).json({ message: 'No token provided' });
+    }
   } catch (error) {
-    return res.status(500).send({
-      message: error.message,
-    });
+    res.status(401).json({ message: 'Unauthorized Token' });
   }
 };
