@@ -15,7 +15,6 @@ exports.register = async (req, res) => {
         const newUser = {
             userId: userId.toLowerCase(),
             name,
-            // avatar,
             password,
         };
 
@@ -54,10 +53,8 @@ exports.login = async (req, res) => {
         user.password = "";
 
         const token = await user.generateToken();
-        const options = {
-            expires: new Date(Date.now() + 360 * 24 * 60 * 60 * 1000),
-        };
-        return res.status(200).cookie("token", token, options).send({
+
+        return res.status(200).cookie("token", token).send({
             user,
             token,
         });
