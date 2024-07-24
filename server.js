@@ -7,7 +7,7 @@ const app = express();
 require('dotenv').config({ path: "./config/config.env" });
 
 // middlewares
-app.use(cors({ origin: "https://fe-voosh-kevinpatel9s-projects.vercel.app", credentials: true }));
+app.use(cors({ origin: "https://fe-voosh.vercel.app", credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -16,7 +16,6 @@ connectDatabase();
 
 const user = require("./routes/UserRoute");
 const task = require("./routes/TaskRoute");
-const { configDotenv } = require("dotenv");
 
 app.get("/", (req, res) => {
     return res.status(200).send("API is running");
