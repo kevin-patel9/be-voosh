@@ -7,7 +7,7 @@ const app = express();
 require('dotenv').config({ path: "./config/config.env" });
 
 // middlewares
-app.use(cors({ origin: "https://fe-voosh.onrender.com", credentials: true }));
+app.use(cors({ origin: "https://fe-voosh-kevinpatel9s-projects.vercel.app", credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
