@@ -6,6 +6,6 @@ exports.authMiddle = async (token) => {
       const decoded = jwt.verify(token, process.env.KEY);
       return decoded._id;
   } catch (error) {
-    res.status(401).json({ message: 'Unauthorized Token' });
+    console.log("Error");
   }
 };
